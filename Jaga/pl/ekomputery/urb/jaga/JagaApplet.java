@@ -1,15 +1,14 @@
 package pl.ekomputery.urb.jaga;
 
-
 import java.awt.BorderLayout;
+import java.util.*;
 import javax.swing.JPanel;
 import javax.swing.JApplet;
 
-import org.jivesoftware.*;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.table.*;
+// import javax.swing.table.*;
 
 /**
  * @author wurb
@@ -24,7 +23,10 @@ public class JagaApplet extends JApplet {
 	private JButton onlineButton = null;
 	private JButton offlineButton = null;
 	
-	class TestData extends AbstractTableModel {
+	private ArrayList connections = new ArrayList();
+	private JagaRoster jagaRoster = null;
+	
+	/* class TestData extends AbstractTableModel {
 		Object[][] data = { {"1", "2"}, {"3", "4"} };
 		
 		public int getColumnCount() { return data[0].length; }
@@ -33,7 +35,7 @@ public class JagaApplet extends JApplet {
 		public Object getValueAt(int row, int col) {
 			return data[row][col];
 		}
-	}
+	} */
 	
 	/**
 	 * This is the default constructor
@@ -50,7 +52,15 @@ public class JagaApplet extends JApplet {
 	public void init() {
 		this.setSize(200, 400);
 		this.setContentPane(getJContentPane());
-		     
+		
+		this.connections.add(new Connection("chrome.pl", 5222, "jaga1", "jaga1" ));
+		((Connection)this.connections.get(0)).connect();
+		((Connection)this.connections.get(0)).loadRoster();
+		((Connection)this.connections.get(0)).disconnect();
+		
+		// initializing jagaRoster
+		this.jagaRoster = new JagaRoster();
+		
 	}
 
 	/**
@@ -118,7 +128,7 @@ public class JagaApplet extends JApplet {
 	 */
 	private JTable getRosterTable() {
 		if (rosterTable == null) {
-			rosterTable = new JTable(new TestData());
+			rosterTable = new JTable();
 		}
 		return rosterTable;
 	}

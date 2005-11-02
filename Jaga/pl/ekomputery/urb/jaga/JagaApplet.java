@@ -59,7 +59,7 @@ public class JagaApplet extends JApplet {
 		((Connection)this.connections.get(0)).disconnect();
 		
 		// initializing jagaRoster
-		this.jagaRoster = new JagaRoster();
+		this.jagaRoster = new JagaRoster(this.connections);
 		
 	}
 

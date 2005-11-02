@@ -6,23 +6,16 @@ import javax.swing.JPanel;
 import javax.swing.JApplet;
 
 import org.jivesoftware.*;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
 import javax.swing.JTable;
-import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JToolBar;
-import javax.swing.JMenuItem;
-import javax.swing.JToggleButton;
+import javax.swing.table.*;
 
 /**
  * @author wurb
  *
  */
 public class JagaApplet extends JApplet {
-
 	private JPanel jContentPane = null;
 	private JPanel jTopPanel = null;
 	private JPanel jDownPanel = null;
@@ -30,8 +23,18 @@ public class JagaApplet extends JApplet {
 	private JTable rosterTable = null;
 	private JButton onlineButton = null;
 	private JButton offlineButton = null;
-	private JMenu jMenu = null;
-	private JMenuItem jMenuItem = null;
+	
+	class TestData extends AbstractTableModel {
+		Object[][] data = { {"1", "2"}, {"3", "4"} };
+		
+		public int getColumnCount() { return data[0].length; }
+		public int getRowCount() { return data.length; }
+		
+		public Object getValueAt(int row, int col) {
+			return data[row][col];
+		}
+	}
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -47,6 +50,7 @@ public class JagaApplet extends JApplet {
 	public void init() {
 		this.setSize(200, 400);
 		this.setContentPane(getJContentPane());
+		     
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class JagaApplet extends JApplet {
 	 */
 	private JTable getRosterTable() {
 		if (rosterTable == null) {
-			rosterTable = new JTable();
+			rosterTable = new JTable(new TestData());
 		}
 		return rosterTable;
 	}
@@ -145,34 +149,6 @@ public class JagaApplet extends JApplet {
 			offlineButton.setText("Offline");
 		}
 		return offlineButton;
-	}
-
-	/**
-	 * This method initializes jMenu	
-	 * 	
-	 * @return javax.swing.JMenu	
-	 */
-	private JMenu getJMenu() {
-		if (jMenu == null) {
-			jMenu = new JMenu();
-			jMenu.setText("Menu");
-			jMenu.setComponentOrientation(java.awt.ComponentOrientation.LEFT_TO_RIGHT);
-			jMenu.add(getJMenuItem());
-		}
-		return jMenu;
-	}
-
-	/**
-	 * This method initializes jMenuItem	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJMenuItem() {
-		if (jMenuItem == null) {
-			jMenuItem = new JMenuItem();
-			jMenuItem.setText("abcd");
-		}
-		return jMenuItem;
 	}
 
 }
